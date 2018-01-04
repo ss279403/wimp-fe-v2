@@ -53,9 +53,10 @@ export class MovieFormComponent implements OnInit {
     }else{
       this.dataService.addRecord("movies", movieForm.value)
           .subscribe(
-            student => this.successMessage = "Record added successfully",
+            movie => this.successMessage = "Record added successfully",
             error =>  this.errorMessage = <any>error);
             this.movie = {};
+            this.movieForm.form.markAsPristine();
     }
 
   }

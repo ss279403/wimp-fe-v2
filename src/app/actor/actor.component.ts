@@ -1,42 +1,41 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component'
 import { DataService } from '../data.service'
 import { fadeInAnimation } from '../animations/fade-in.animation';
 
-
 @Component({
-  selector: 'app-movie',
-  templateUrl: './movie.component.html',
-  styleUrls: ['./movie.component.css'],
+  selector: 'app-actor',
+  templateUrl: './actor.component.html',
+  styleUrls: ['./actor.component.css'],
   animations: [fadeInAnimation],
 })
-export class MovieComponent implements OnInit {
+export class ActorComponent implements OnInit {
 
   errorMessage: string;
   successMessage: string;
-  movies: any[];
+  actors: any[];
 
   constructor (private dataService: DataService, public dialog: MatDialog) {}
 
-  getMovies() {
-    this.dataService.getRecords("movies")
+  getActors() {
+    this.dataService.getRecords("actors")
       .subscribe(
-        movies => this.movies = movies,
+        actors => this.actors = actors,
         error =>  this.errorMessage = <any>error);
   }
 
-  deleteMovie(id:number) {
+  deleteActor(id:number) {
 
     let dialogRef = this.dialog.open(DeleteConfirmComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.dataService.deleteRecord("movies", id)
+        this.dataService.deleteRecord("actors", id)
           .subscribe(
-            movie => {
+            actor => {
               this.successMessage = "Record(s) deleted successfully"; 
-              this.getMovies(); 
+              this.getActors(); 
             },
             error =>  this.errorMessage = <any>error);
       }
@@ -44,7 +43,7 @@ export class MovieComponent implements OnInit {
   }
 
   ngOnInit() { 
-    this.getMovies(); 
+    this.getActors(); 
   }
 
 }
